@@ -1,0 +1,11 @@
+dependencies {
+    //declared for FeignClient
+    compile('org.springframework.cloud:spring-cloud-starter-feign')
+    compile project(":provider-service-domain")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

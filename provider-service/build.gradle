@@ -1,0 +1,86 @@
+// Add defaultTasks to build all projects for different task
+defaultTasks 'clean', ':provider-service-domain:jar', ':provider-service-api:jar', 'build'
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.10.RELEASE'
+		springCloudVersion = 'Dalston.SR4'
+		localNexusServer = 'http://146.122.219.146:8081/repository/maven-public/'
+		localNexusReleases = 'http://146.122.219.146:8081/repository/maven-releases'
+		localNexusSnapshots = 'http://146.122.219.146:8081/repository/maven-snapshots'
+	}
+	repositories {
+		maven { url localNexusServer }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+allprojects {
+	// Declare the all subprojects shared plugin here.
+	apply plugin: 'java'
+	apply plugin: 'maven'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+
+	// All projects shared group,version
+	// Using the default project.name of each subproject for artifact id.
+
+	group = 'com.siemens.mindsphere.maa'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+
+	// Use local Nexus Maven repository for external dependency jar and internal jar
+	repositories {
+		maven { url localNexusServer }
+	}
+
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				// Internal releases repo
+				repository (url: localNexusReleases) {
+					authentication (userName: "admin", password: "admin123")
+				}
+				// Internal snapshots repo
+				snapshotRepository (url: localNexusSnapshots) {
+					authentication(userName: "admin", password: "admin123")
+				}
+			}
+
+		}
+	}
+}
+
+dependencies {
+	compile project(":provider-service-domain")
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.cloud:spring-cloud-starter-eureka')
+	compile('org.springframework.cloud:spring-cloud-starter-feign')
+	compile('org.springframework.cloud:spring-cloud-starter-hystrix')
+	compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+	compile('org.springframework.cloud:spring-cloud-sleuth-zipkin')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+	compile ('io.springfox:springfox-swagger2:2.7.0')
+	compile ('io.springfox:springfox-swagger-ui:2.7.0')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	runtime('org.postgresql:postgresql:42.1.4')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+subprojects{
+	dependencies {
+		//
+	}
+}
