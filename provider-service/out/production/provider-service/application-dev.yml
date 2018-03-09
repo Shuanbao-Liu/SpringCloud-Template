@@ -1,0 +1,35 @@
+#Actuator configuration
+info:
+  microServiceName: ${spring.application.name}
+
+## Local PostgreSQL
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/users
+    username: postgres
+    password: 123456
+    driverClassName: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# MongoDB
+  data:
+    mongodb:
+      uri: mongodb://name:pass@localhost:27017/repositoryName
+
+# Redis
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+    timeout: 0
