@@ -1,6 +1,0 @@
-include 'provider-service-api'
-include 'provider-service-domain'
-
-rootProject.name = 'provider-service'
-
-
