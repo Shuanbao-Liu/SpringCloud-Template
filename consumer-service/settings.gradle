@@ -1,0 +1,4 @@
+include 'consumer-service-api'
+include 'consumer-service-domain'
+
+rootProject.name = 'consumer-service'
