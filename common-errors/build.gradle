@@ -1,0 +1,52 @@
+defaultTasks 'clean', 'jar'
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.8.RELEASE'
+		localNexusServer = 'http://146.122.219.146:8081/repository/maven-public/'
+		localNexusReleases = 'http://146.122.219.146:8081/repository/maven-releases'
+		localNexusSnapshots = 'http://146.122.219.146:8081/repository/maven-snapshots'
+	}
+	repositories {
+		maven { url localNexusServer }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin:  'maven'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.siemens.mindsphere.maa'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	maven { url localNexusServer }
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			// Internal releases repo
+			repository (url: localNexusReleases) {
+				authentication (userName: "admin", password: "admin123")
+			}
+			// Internal snapshots repo
+			snapshotRepository (url: localNexusSnapshots) {
+				authentication(userName: "admin", password: "admin123")
+			}
+		}
+	}
+}
