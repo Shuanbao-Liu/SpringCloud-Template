@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: api-gateway-service
+server:
+  port: 5555
+
+# Route rules
+# Normal configuration format
+# routes.<routeName>.path = /path/**
+# zuul.routes.<routeName>.serviceId = serviceName
+zuul:
+  routes:
+    api-provider:
+      path: /provider/**
+      serviceId:  provider
+    api-consumer:
+      path: /consumer/**
+      serviceId:  consumer
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://localhost:2222/eureka/
