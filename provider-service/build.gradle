@@ -23,7 +23,7 @@ allprojects {
 	apply plugin: 'maven'
 	apply plugin: 'idea'
 	apply plugin: 'org.springframework.boot'
-
+	apply plugin: "jacoco"
 	// All projects shared group,version
 	// Using the default project.name of each subproject for artifact id.
 
@@ -31,6 +31,9 @@ allprojects {
 	version = '0.0.1-SNAPSHOT'
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
+
+
+
 
 	// Use local Nexus Maven repository for external dependency jar and internal jar
 	repositories {
@@ -53,6 +56,19 @@ allprojects {
 		}
 	}
 }
+test {
+	useTestNG()
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination file("${buildDir}/jacocoHtml")
+	}
+}
+check.dependsOn jacocoTestReport
+
 
 dependencies {
 	compile project(":provider-service-domain")
@@ -68,9 +84,12 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-redis')
 	compile ('io.springfox:springfox-swagger2:2.7.0')
 	compile ('io.springfox:springfox-swagger-ui:2.7.0')
+	runtime('com.h2database:h2')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('org.postgresql:postgresql:42.1.4')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.testng:testng:6.11')
+	testCompile('org.jmockit:jmockit:1.35')
 }
 
 dependencyManagement {
