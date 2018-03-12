@@ -14,14 +14,14 @@ public class ProviderServiceDomainUser {
     @GeneratedValue
     private Long id;
 
-    @NotNull
-    @Size(min = 2, max = 8)
+//    @NotNull
+//    @Size(min = 2, max = 8)
     private String username;
 
-    @NotNull
+//    @NotNull
     //@Pattern(regexp="/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/", message="include 6~10 numbers and characters")
-    @Pattern(regexp = "^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])).{6,10}$",message="include 6~10 numbers and characters")
-    @Size(min = 6, max = 10)
+//    @Pattern(regexp = "^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])).{6,10}$",message="include 6~10 numbers and characters")
+//    @Size(min = 6, max = 10)
     private String password;
 
     public Long getId() {
