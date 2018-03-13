@@ -20,8 +20,9 @@ spring:
 # MongoDB
   data:
     mongodb:
-      uri: mongodb://name:pass@localhost:27017/repositoryName
-
+      uri: mongodb://localhost:27017/repositoryName
+      username: user
+      password: pass
 # Redis
   redis:
     database: 0
