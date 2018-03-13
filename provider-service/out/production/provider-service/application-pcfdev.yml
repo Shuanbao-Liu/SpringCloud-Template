@@ -1,0 +1,10 @@
+eureka:
+  instance:
+    instanceId: ${vcap.application.name}:${vcap.application.application_id:${random.value}}
+    hostname: ${vcap.application.uris[0]}
+  client:
+    healthcheck:
+      enabled: false
+    serviceUrl:
+      defaultZone: ${vcap.services.eureka.credentials.url}
+    fetch-registry: true
