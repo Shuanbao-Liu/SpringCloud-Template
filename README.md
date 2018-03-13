@@ -1,10 +1,8 @@
 # SpringCloudLearning
 
-## Project templates for SpringCloud based SpringBoot microservice application.
+## Project templates for SpringCloud based SpringBoot microservice application.including following templates
 
-##  Including following templates
 
----
 - registry-server
 - provider-service
 - consumer-service
